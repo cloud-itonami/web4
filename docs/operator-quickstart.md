@@ -1,7 +1,7 @@
 # Operator quickstart
 
 **This repository documents contracts that are live on Ethereum mainnet, owned by a
-2-of-3 Safe.** `CLAUDE.md` lists a GCC token, a minter accepting ETH/USDC/USDT, the
+2-of-3 Safe.** `AGENTS.md` lists a GCC token, a minter accepting ETH/USDC/USDT, the
 Safe that owns both, and the deployer EOA. Nothing here should be run casually, and
 this document deliberately contains no instructions for minting, transferring or
 deploying anything. It answers two questions instead: what can be checked safely
@@ -36,11 +36,11 @@ transfer."
 ## 2. The addresses are internally consistent, and three are well-known ✅
 
 ```bash
-grep -oE '0x[0-9a-fA-F]{40}' CLAUDE.md | sort -u
+grep -oE '0x[0-9a-fA-F]{40}' AGENTS.md | sort -u
 git grep -ohE '0x[0-9a-fA-F]{40}' -- . | sort | uniq -c | sort -rn
 ```
 
-Every address `CLAUDE.md` documents appears once or twice in the tree and nowhere
+Every address `AGENTS.md` documents appears once or twice in the tree and nowhere
 does a second value compete with it. Three of the addresses in the code are
 canonical mainnet constants rather than anything this project chose:
 
@@ -50,14 +50,14 @@ canonical mainnet constants rather than anything this project chose:
 | `0xdAC17F958D2ee523a2206206994597C13D831ec7` | USDT |
 | `0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419` | Chainlink ETH/USD aggregator |
 
-That is consistent with `CLAUDE.md`'s claim that the minter accepts ETH, USDC and
+That is consistent with `AGENTS.md`'s claim that the minter accepts ETH, USDC and
 USDT and prices ETH through Chainlink. (Those three are stated from general
 knowledge of the mainnet deployments, not verified against a chain from here — this
 document makes no network calls.)
 
 ## 3. ⚠ The mainnet token's source file is named `TestUSDC.sol`
 
-`CLAUDE.md` names the contracts directory and the token's address and never says
+`AGENTS.md` names the contracts directory and the token's address and never says
 which file implements it. Searching for the obvious name finds only the minter:
 
 ```bash
@@ -85,14 +85,14 @@ Circle's production FiatTokenV2_2:
 
 The first two are substantive and worth knowing: this token cannot be upgraded,
 where Circle's is proxied. The third describes a testnet trade-off in a contract
-`CLAUDE.md` places on Ethereum mainnet. Unpacked storage on mainnet is not a bug,
+`AGENTS.md` places on Ethereum mainnet. Unpacked storage on mainnet is not a bug,
 it just costs more gas — but the comment's premise and the deployment do not
 match, and that is the kind of mismatch worth resolving before someone relies on
 either.
 
 Renaming a deployed contract's source is not a thing to do lightly, since the
 address is fixed and the name is in the ABI. Whether the fix is a rename, a comment,
-or a line in `CLAUDE.md` mapping address to file is the owner's call. The document
+or a line in `AGENTS.md` mapping address to file is the owner's call. The document
 records that the mapping is currently written nowhere.
 
 ## 4. The Solidity tests ⚠ NOT WALKED, with the reason
